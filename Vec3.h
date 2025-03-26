@@ -1,6 +1,9 @@
 #include <iostream>
 #include <math.h>
 
+#ifndef vec
+#define vec
+
 class Vec3
 {
     public:
@@ -104,3 +107,4 @@ inline Vec3 norm(Vec3 v) //向量归一化
 {
     return v / v.Length();
 }
+#endif
