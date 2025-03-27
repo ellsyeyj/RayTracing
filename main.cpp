@@ -2,10 +2,23 @@
 #include "Vec3.h"
 #include "Ray.h"
 
-const int height=100;   //图片的高
-const int width=200;    //图片的宽
+const int height=200;   //图片的高
+const int width=400;    //图片的宽
+
+bool HitSphere(const Vec3 &center,double radius,const Ray &r)
+{
+    Vec3 origin_center=r.origin()-center;
+    double b=2*dot(origin_center,r.direction());
+    double a=dot(r.direction(),r.direction());
+    double c=(dot(origin_center,origin_center)-radius*radius);
+    return (b*b-4*a*c)>0;
+}
 
 Vec3 ray_color(const Ray& r) { //根据y值决定颜色，y值越小越倾向于白色(255,255,255)，越大越倾向蓝色
+    if(HitSphere(Vec3(0,0,-5),1,r))
+    {
+        return Vec3(1,0,0);
+    }
     Vec3 unit_direction = norm(r.direction());
     auto t = 0.5*(unit_direction.y() + 1.0);
     return (1.0-t)*Vec3(1.0, 1.0, 1.0) + t*Vec3(0.5, 0.7, 1.0);
